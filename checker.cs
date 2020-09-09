@@ -15,7 +15,7 @@ class Checker
             Console.WriteLine(msg);
         }
 	}
-    class AlertInsound:Alert
+    class AlertInSound:Alert
     {
         public override void Alertmessage(string msg)
         {
@@ -28,10 +28,10 @@ class Checker
         {
             return true;
         }
-        smsAlert smsMessage=new SMSAlert();
+        SMSAlert smsMessage=new SMSAlert();
         smsMessage.Alertmessage("all okay");
         AlertInSound soundMessage=new AlertInSound();
-        soundMessage.Alertmessage("Vitals is not Ok");
+        soundMessage.Alertmessage("all oaky done");
         return false;
     }
     static bool vitalsAreOk(float bpm, float spo2, float respRate)
