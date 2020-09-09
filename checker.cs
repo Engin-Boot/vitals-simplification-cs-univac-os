@@ -2,25 +2,55 @@ using System;
 using System.Diagnostics;
 
 class Checker
-{
-    static bool vitalsAreOk(float bpm, float spo2, float respRate) {
-        if(bpm < 70 || bpm > 150) {
-            return false;
-        } else if(spo2 < 90) {
-            return false;
-        } else if(respRate < 30 || respRate > 95) {
-            return false;
+{ 
+    abstract class Alert
+	{
+        public abstract void Alertmessage(string msg);
+
+	}
+    class SMSAlert:Alert
+	{
+        public override void Alertmessage(string msg)
+        {
+            Console.WriteLine(msg);
         }
-        return true;
+	}
+    class AlertInsound:Alert
+    {
+        public override void Alertmessage(string msg)
+        {
+            Console.WriteLine(msg);
+        }
     }
-    static void ExpectTrue(bool expression) {
-        if(!expression) {
+    static bool vitalsIsOk(float value, float lower, float upper)
+    {
+        if (value>=lower && value<=upper)
+        {
+            return true;
+        }
+        smsAlert smsMessage=new SMSAlert();
+        smsMessage.Alertmessage("all okay");
+        AlertInSound soundMessage=new AlertInSound();
+        soundMessage.Alertmessage("Vitals is not Ok");
+        return false;
+    }
+    static bool vitalsAreOk(float bpm, float spo2, float respRate)
+    {
+        return (vitalsIsOk(bpm,70,150) && vitalsIsOk(spo2,90,100) && vitalsIsOk(respRate, 30, 95));
+    }
+    
+    static void ExpectTrue(bool expression)
+    {
+        if (!expression)
+        {
             Console.WriteLine("Expected true, but got false");
             Environment.Exit(1);
         }
     }
-    static void ExpectFalse(bool expression) {
-        if(expression) {
+    static void ExpectFalse(bool expression)
+    {
+        if (expression)
+        {
             Console.WriteLine("Expected false, but got true");
             Environment.Exit(1);
         }
