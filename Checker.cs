@@ -77,11 +77,14 @@ namespace Rough
         internal  void Spo2Check(float value)
         {
             if (value < spo2Limits[0])
-                Console.WriteLine("spo2 is low");
+                message = "SPO2 is below";
+            //Console.WriteLine("spo2 is low");
             else if (value > spo2Limits[1])
-                Console.WriteLine("spo2 is high");
+                message = "SPO2 is above";
+            //Console.WriteLine("spo2 is high");
             else
-                Console.WriteLine("all okay");
+                message = "SPO2 is all okay";
+                //Console.WriteLine("all okay");
         }
 
         public void Alerting()
@@ -101,11 +104,14 @@ namespace Rough
         internal  void RespRateCheck(float value)
         {
             if (value < respRateLimits[0])
-                Console.WriteLine("respRate is low");
+                message = "RESPRATE IS BELOW";
+            //Console.WriteLine("respRate is low");
             else if (value > respRateLimits[1])
-                Console.WriteLine("RespRate is high");
+                message = "RESPRATE iS ABOVE";
+            //Console.WriteLine("RespRate is high");
             else
-                Console.WriteLine("all okay");
+                message="RESPRATE IS OKAY";
+                //Console.WriteLine("all okay");
         }
 
         public void Alerting()
@@ -113,7 +119,7 @@ namespace Rough
             if (this.Alert != null)
             {
                 Console.WriteLine("-------------------");
-                this.Alert.Invoke("SPO2", this.message);
+                this.Alert.Invoke("RESPRATE", this.message);
             }
         }
     }
@@ -158,6 +164,13 @@ namespace Rough
 
         static void Main(string[] args)
         {
+            
+            CheckVitals _check = new CheckVitals(bpm.BpmCheck);
+            Checker _checkerBpm = new Checker(new CheckVitals(_check));
+            
+            Checker _checkerSpo2 = new Checker(new CheckVitals(spo2.Spo2Check));
+            
+            Checker _checkerRespRate = new Checker(new CheckVitals(respRate.RespRateCheck));
 
             //give value
             _checkerBpm.startCheck(90);
